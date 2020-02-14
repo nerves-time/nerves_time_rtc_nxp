@@ -1,13 +1,14 @@
 defmodule NervesTime.RTC.NXP.BCDTest do
   use ExUnit.Case
-  use PropCheck
   alias NervesTime.RTC.NXP.BCD
 
-  property "conversion is symmetrical" do
-    forall int <- integer(0, 99) do
-      bcd = BCD.int_to_bcd(int)
-      assert BCD.bcd_to_int(bcd) == int
-      assert match?(<<_::8>>, bcd)
+  test "all values convert" do
+    for tens <- 0..9, ones <- 0..9 do
+      number = tens * 10 + ones
+      bcd = tens * 16 + ones
+
+      assert BCD.int_to_bcd(number) == bcd
+      assert BCD.bcd_to_int(bcd) == number
     end
   end
 end
