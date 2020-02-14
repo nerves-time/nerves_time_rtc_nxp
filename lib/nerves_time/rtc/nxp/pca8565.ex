@@ -15,12 +15,12 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
   @register_control <<0x00>>
 
   @register_seconds <<0x2>>
-  @register_minutes <<0x3>>
-  @register_hours <<0x04>>
-  @register_days <<0x05>>
+  # @register_minutes <<0x3>>
+  # @register_hours <<0x04>>
+  # @register_days <<0x05>>
   # @register_weekday <<0x06>>
-  @register_months <<0x07>>
-  @register_year <<0x08>>
+  # @register_months <<0x07>>
+  # @register_year <<0x08>>
 
   @type address :: pos_integer()
 
@@ -60,57 +60,17 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
 
   @spec set_time_to_rtc(state, NaiveDateTime.t()) :: :ok | {:error, term()}
   defp set_time_to_rtc(state, %NaiveDateTime{} = date_time) do
-    # discard top bit
-    <<_::bits-1, second::integer-7>> = int_to_bcd(date_time.second)
-    # discard top bit
-    <<_::bits-1, minute::integer-7>> = int_to_bcd(date_time.minute)
-    # discard 2 bits
-    <<_::bits-2, hour::integer-6>> = int_to_bcd(date_time.hour)
-    <<_::bits-2, day::integer-6>> = int_to_bcd(date_time.day)
-    <<_::bits-3, month::integer-5>> = int_to_bcd(date_time.month)
-    year = int_to_bcd(date_time.year - 2000)
-
     I2C.write(state.i2c, state.address, [
       @register_seconds,
-      # unset the VL bit. The clock is guaranteed after this.
-      <<0::integer-1, second::integer-7>>,
-      # drop first bit
-      <<0::integer-1, minute::integer-7>>,
-      # drop first two bits
-      <<0::integer-2, hour::integer-6>>,
-      <<0::integer-2, day::integer-6>>,
-      # TODO(connor) weekday
-      <<0::size(8)>>,
-      # first bit is century. drop 2 bits.
-      <<1::integer-1, 0::integer-2, month::integer-5>>,
-      year
+      time_to_registers(date_time)
     ])
   end
 
   @spec get_time_from_rtc(state) :: {:ok, NaiveDateTime.t()} | {:error, term()}
   defp get_time_from_rtc(state) do
-    with {:ok, <<_vl::bits-1, second::bits-7>>} <-
-           I2C.write_read(state.i2c, state.address, @register_seconds, 1),
-         {:ok, <<_::bits-1, minute::bits-7>>} <-
-           I2C.write_read(state.i2c, state.address, @register_minutes, 1),
-         {:ok, <<_::bits-2, hour::bits-6>>} <-
-           I2C.write_read(state.i2c, state.address, @register_hours, 1),
-         {:ok, <<_::bits-2, day::bits-6>>} <-
-           I2C.write_read(state.i2c, state.address, @register_days, 1),
-         {:ok, <<_c::bits-1, _::bits-2, month::bits-5>>} <-
-           I2C.write_read(state.i2c, state.address, @register_months, 1),
-         # implied 20XX
-         {:ok, <<year::bits-8>>} <- I2C.write_read(state.i2c, state.address, @register_year, 1) do
-      dt = %NaiveDateTime{
-        day: bcd_to_int(day),
-        hour: bcd_to_int(hour),
-        minute: bcd_to_int(minute),
-        month: bcd_to_int(month),
-        second: bcd_to_int(second),
-        year: 2000 + bcd_to_int(year)
-      }
-
-      {:ok, dt}
+    with {:ok, registers} <-
+           I2C.write_read(state.i2c, state.address, @register_seconds, 7) do
+      {:ok, registers_to_time(registers)}
     end
   end
 
@@ -123,5 +83,51 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
       {:error, :i2c_nak} ->
         false
     end
+  end
+
+  defp time_to_registers(%NaiveDateTime{} = date_time) do
+    second_bcd = int_to_bcd(date_time.second)
+    minute_bcd = int_to_bcd(date_time.minute)
+    hour_bcd = int_to_bcd(date_time.hour)
+    day_bcd = int_to_bcd(date_time.day)
+    month_bcd = int_to_bcd(date_time.month)
+    year_bcd = int_to_bcd(date_time.year - 2000)
+
+    <<
+      # unset the VL bit. The clock is guaranteed after this.
+      0::integer-1,
+      second_bcd::integer-7,
+      # drop first bit
+      0::integer-1,
+      minute_bcd::integer-7,
+      # drop first two bits
+      0::integer-2,
+      hour_bcd::integer-6,
+      0::integer-2,
+      day_bcd::integer-6,
+      # TODO(connor) weekday
+      0::integer-8,
+      # first bit is century. drop 2 bits.
+      1::integer-1,
+      0::integer-2,
+      month_bcd::integer-5,
+      year_bcd
+    >>
+  end
+
+  defp registers_to_time(
+         <<_vl::integer-1, second_bcd::integer-7, _::integer-1, minute_bcd::integer-7,
+           _::integer-2, hour_bcd::integer-6, _::integer-2, day_bcd::integer-6,
+           _weekday_bcd::integer-8, _c::integer-1, _::integer-2, month_bcd::integer-5,
+           year_bcd::integer-8>>
+       ) do
+    %NaiveDateTime{
+      day: bcd_to_int(day_bcd),
+      hour: bcd_to_int(hour_bcd),
+      minute: bcd_to_int(minute_bcd),
+      month: bcd_to_int(month_bcd),
+      second: bcd_to_int(second_bcd),
+      year: 2000 + bcd_to_int(year_bcd)
+    }
   end
 end
