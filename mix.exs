@@ -33,7 +33,7 @@ defmodule NervesTime.RTC.NXP.MixProject do
     ]
   end
 
-  def description, do: "NervesTime.RTC implementaitons for common NXP chips"
+  def description, do: "NervesTime.RTC implementations for common NXP chips"
 
   def package do
     [

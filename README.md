@@ -1,6 +1,6 @@
 # NervesTime.RTC.NXP
 
-NervesTime.RTC implementaitons for common NXP chips
+NervesTime.RTC implementations for common NXP chips
 
 ## Currently supported modules
 
