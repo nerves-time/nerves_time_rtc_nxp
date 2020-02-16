@@ -36,7 +36,7 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
     bus_name = Keyword.get(args, :bus_name, @default_bus_name)
     address = Keyword.get(args, :address, @default_address)
 
-    with {:ok, i2c} <- I2C.open("i2c-1"),
+    with {:ok, i2c} <- I2C.open(bus_name),
          true <- rtc_available?(i2c, address) do
       {:ok, %{i2c: i2c, bus_name: bus_name, address: address}}
     else
