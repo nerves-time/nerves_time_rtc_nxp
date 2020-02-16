@@ -2,7 +2,7 @@ defmodule NervesTime.RTC.NXP.MixProject do
   use Mix.Project
 
   @version "0.1.0"
-  @source_url "https://github.com/connorrigby/nerves_time_rtc_nxp"
+  @source_url "https://github.com/nerves-time/nerves_time_rtc_nxp"
 
   def project do
     [
@@ -28,7 +28,7 @@ defmodule NervesTime.RTC.NXP.MixProject do
   defp deps do
     [
       {:circuits_i2c, "~> 0.3.6"},
-      {:nerves_time, github: "fhunleth/nerves_time"},
+      {:nerves_time, github: "nerves-time/nerves_time"},
       {:propcheck, github: "alfert/propcheck", only: :test}
     ]
   end
