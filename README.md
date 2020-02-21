@@ -8,10 +8,9 @@ NervesTime.RTC implementations for common NXP chips
 |:---:|---------|-------------|
 | PCA8565 | https://www.nxp.com/docs/en/data-sheet/PCA8565.pdf | `NervesTime.RTC.NXP.PCA8565` |
 
-## Installation
+## Using
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `nerves_time_rtc_nxp` to your list of dependencies in `mix.exs`:
+First add this project to your `mix` dependencies:
 
 ```elixir
 def deps do
@@ -21,7 +20,18 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/nerves_time_pfc85363](https://hexdocs.pm/nerves_time_pfc85363).
+And then update your `:nerves_time` configuration to point to it:
+
+```elixir
+config :nerves_time, rtc: NervesTime.RTC.NXP.PCA8565
+```
+
+It's possible to override the default I2C bus and address via options:
+
+```elixir
+config :nerves_time, rtc: {NervesTime.RTC.NXP.PCA8565, [bus_name: "i2c-2", address:
+0x51]}
+```
+
+Check the logs for error messages if the RTC doesn't appear to work.
 
