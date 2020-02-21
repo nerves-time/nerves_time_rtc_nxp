@@ -28,8 +28,7 @@ defmodule NervesTime.RTC.NXP.MixProject do
   defp deps do
     [
       {:circuits_i2c, "~> 0.3.6"},
-      {:nerves_time, github: "nerves-time/nerves_time"},
-      {:propcheck, github: "alfert/propcheck", only: :test}
+      {:nerves_time, "~> 0.4"}
     ]
   end
 

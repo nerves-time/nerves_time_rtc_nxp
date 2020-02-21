@@ -4,7 +4,7 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
   """
 
   @behaviour NervesTime.RealTimeClock
-  import NervesTime.RTC.NXP.BCD
+  import NervesTime.RealTimeClock.BCD
 
   require Logger
   alias Circuits.I2C
@@ -49,12 +49,15 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
   end
 
   @impl NervesTime.RealTimeClock
-  def update(state) do
-    set_time_to_rtc(state, NaiveDateTime.utc_now())
+  def terminate(_state), do: :ok
+
+  @impl NervesTime.RealTimeClock
+  def set_time(state, now) do
+    set_time_to_rtc(state, now)
   end
 
   @impl NervesTime.RealTimeClock
-  def time(state) do
+  def get_time(state) do
     get_time_from_rtc(state)
   end
 
@@ -86,12 +89,12 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
   end
 
   defp time_to_registers(%NaiveDateTime{} = date_time) do
-    second_bcd = int_to_bcd(date_time.second)
-    minute_bcd = int_to_bcd(date_time.minute)
-    hour_bcd = int_to_bcd(date_time.hour)
-    day_bcd = int_to_bcd(date_time.day)
-    month_bcd = int_to_bcd(date_time.month)
-    year_bcd = int_to_bcd(date_time.year - 2000)
+    second_bcd = from_integer(date_time.second)
+    minute_bcd = from_integer(date_time.minute)
+    hour_bcd = from_integer(date_time.hour)
+    day_bcd = from_integer(date_time.day)
+    month_bcd = from_integer(date_time.month)
+    year_bcd = from_integer(date_time.year - 2000)
 
     <<
       # unset the VL bit. The clock is guaranteed after this.
@@ -122,12 +125,12 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
            year_bcd::integer-8>>
        ) do
     %NaiveDateTime{
-      day: bcd_to_int(day_bcd),
-      hour: bcd_to_int(hour_bcd),
-      minute: bcd_to_int(minute_bcd),
-      month: bcd_to_int(month_bcd),
-      second: bcd_to_int(second_bcd),
-      year: 2000 + bcd_to_int(year_bcd)
+      day: to_integer(day_bcd),
+      hour: to_integer(hour_bcd),
+      minute: to_integer(minute_bcd),
+      month: to_integer(month_bcd),
+      second: to_integer(second_bcd),
+      year: 2000 + to_integer(year_bcd)
     }
   end
 end
