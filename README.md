@@ -1,5 +1,8 @@
 # NervesTime.RTC.NXP
 
+[![CircleCI](https://circleci.com/gh/nerves-time/nerves_time_rtc_nxp.svg?style=svg)](https://circleci.com/gh/nerves-time/nerves_time_rtc_nxp)
+[![Hex version](https://img.shields.io/hexpm/v/nerves_time_rtc_nxp.svg "Hex version")](https://hex.pm/packages/nerves_time_rtc_nxp)
+
 NervesTime.RTC implementations for common NXP chips
 
 ## Currently supported modules
@@ -35,4 +38,3 @@ config :nerves_time, rtc: {NervesTime.RTC.NXP.PCA8565, [bus_name: "i2c-2", addre
 ```
 
 Check the logs for error messages if the RTC doesn't appear to work.
-

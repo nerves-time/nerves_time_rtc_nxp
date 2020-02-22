@@ -8,27 +8,35 @@ defmodule NervesTime.RTC.NXP.MixProject do
     [
       app: :nerves_time_rtc_nxp,
       version: @version,
-      elixir: "~> 1.7",
-      start_permanent: Mix.env() == :prod,
-      deps: deps(),
+      elixir: "~> 1.11",
       description: description(),
       package: package(),
-      docs: docs()
+      source_url: @source_url,
+      docs: docs(),
+      dialyzer: [
+        flags: [:unmatched_returns, :error_handling, :missing_return, :extra_return, :underspecs]
+      ],
+      deps: deps(),
+      preferred_cli_env: %{
+        docs: :docs,
+        "hex.publish": :docs,
+        "hex.build": :docs
+      }
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:logger]
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
       {:circuits_i2c, "~> 1.0"},
-      {:nerves_time, "~> 0.4"}
+      {:nerves_time, "~> 0.4"},
+      {:ex_doc, "~> 0.19", only: :docs, runtime: false},
+      {:dialyxir, "~> 1.3", only: [:dev, :test], runtime: false}
     ]
   end
 
