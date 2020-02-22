@@ -13,22 +13,26 @@ defmodule NervesTime.RTC.NXP.MixProject do
       deps: deps(),
       description: description(),
       package: package(),
-      docs: docs()
+      source_url: @source_url,
+      docs: docs(),
+      dialyzer: [
+        flags: [:unmatched_returns, :error_handling, :race_conditions, :underspecs]
+      ]
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:logger]
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
       {:circuits_i2c, "~> 0.3.6"},
-      {:nerves_time, "~> 0.4"}
+      {:nerves_time, "~> 0.4.0"},
+      {:ex_doc, "~> 0.19", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev, :test], runtime: false}
     ]
   end
 
