@@ -53,27 +53,22 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
 
   @impl NervesTime.RealTimeClock
   def set_time(state, now) do
-    set_time_to_rtc(state, now)
+    _ =
+      I2C.write(state.i2c, state.address, [
+        @register_seconds,
+        time_to_registers(now)
+      ])
+
+    state
   end
 
   @impl NervesTime.RealTimeClock
   def get_time(state) do
-    get_time_from_rtc(state)
-  end
-
-  @spec set_time_to_rtc(state, NaiveDateTime.t()) :: :ok | {:error, term()}
-  defp set_time_to_rtc(state, %NaiveDateTime{} = date_time) do
-    I2C.write(state.i2c, state.address, [
-      @register_seconds,
-      time_to_registers(date_time)
-    ])
-  end
-
-  @spec get_time_from_rtc(state) :: {:ok, NaiveDateTime.t()} | {:error, term()}
-  defp get_time_from_rtc(state) do
     with {:ok, registers} <-
            I2C.write_read(state.i2c, state.address, @register_seconds, 7) do
-      {:ok, registers_to_time(registers)}
+      {:ok, registers_to_time(registers), state}
+    else
+      _any_error -> {:unset, state}
     end
   end
 
