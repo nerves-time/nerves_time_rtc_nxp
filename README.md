@@ -7,6 +7,7 @@ NervesTime.RTC implementations for common NXP chips
 |model|datasheet|elixir module|
 |:---:|---------|-------------|
 | PCA8565 | https://www.nxp.com/docs/en/data-sheet/PCA8565.pdf | `NervesTime.RTC.NXP.PCA8565` |
+| PCF8563 | https://www.nxp.com/docs/en/data-sheet/PCF8563.pdf | `NervesTime.RTC.NXP.PCF8563` |
 
 ## Using
 

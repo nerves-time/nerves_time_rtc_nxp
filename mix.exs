@@ -27,7 +27,7 @@ defmodule NervesTime.RTC.NXP.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:circuits_i2c, "~> 0.3.6"},
+      {:circuits_i2c, "~> 1.0"},
       {:nerves_time, "~> 0.4"}
     ]
   end
