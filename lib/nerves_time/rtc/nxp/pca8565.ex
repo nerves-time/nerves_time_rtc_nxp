@@ -6,7 +6,6 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
   @behaviour NervesTime.RealTimeClock
   import NervesTime.RealTimeClock.BCD
 
-  require Logger
   alias Circuits.I2C
 
   @default_bus_name "i2c-1"
@@ -14,13 +13,13 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
 
   @register_control <<0x00>>
 
-  @register_seconds <<0x2>>
-  # @register_minutes <<0x3>>
+  @register_seconds <<0x02>>
+  # @register_minutes <<0x03>>
   # @register_hours <<0x04>>
   # @register_days <<0x05>>
-  # @register_weekday <<0x06>>
+  # @register_weekdays <<0x06>>
   # @register_months <<0x07>>
-  # @register_year <<0x08>>
+  # @register_years <<0x08>>
 
   @type address :: pos_integer()
 
@@ -54,11 +53,16 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
   @impl NervesTime.RealTimeClock
   def set_time(state, now) do
     set_time_to_rtc(state, now)
+    state
   end
 
   @impl NervesTime.RealTimeClock
   def get_time(state) do
-    get_time_from_rtc(state)
+    with {:ok, time} <- get_time_from_rtc(state) do
+      {:ok, time, state}
+    else
+      _ -> {:unset, state}
+    end
   end
 
   @spec set_time_to_rtc(state, NaiveDateTime.t()) :: :ok | {:error, term()}
@@ -93,6 +97,12 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
     minute_bcd = from_integer(date_time.minute)
     hour_bcd = from_integer(date_time.hour)
     day_bcd = from_integer(date_time.day)
+
+    weekday_bcd =
+      Calendar.ISO.day_of_week(date_time.year, date_time.month, date_time.day, :sunday)
+      |> then(fn {day_of_week, 1, 7} -> day_of_week - 1 end)
+      |> from_integer()
+
     month_bcd = from_integer(date_time.month)
     year_bcd = from_integer(date_time.year - 2000)
 
@@ -108,8 +118,9 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
       hour_bcd::integer-6,
       0::integer-2,
       day_bcd::integer-6,
-      # TODO(connor) weekday
-      0::integer-8,
+      # drop first five bits
+      0::integer-5,
+      weekday_bcd::integer-3,
       # first bit is century. drop 2 bits.
       1::integer-1,
       0::integer-2,
@@ -120,8 +131,8 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
 
   defp registers_to_time(
          <<_vl::integer-1, second_bcd::integer-7, _::integer-1, minute_bcd::integer-7,
-           _::integer-2, hour_bcd::integer-6, _::integer-2, day_bcd::integer-6,
-           _weekday_bcd::integer-8, _c::integer-1, _::integer-2, month_bcd::integer-5,
+           _::integer-2, hour_bcd::integer-6, _::integer-2, day_bcd::integer-6, _::integer-5,
+           _weekday_bcd::integer-3, _c::integer-1, _::integer-2, month_bcd::integer-5,
            year_bcd::integer-8>>
        ) do
     %NaiveDateTime{
