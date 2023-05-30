@@ -19,7 +19,7 @@ First add this project to your `mix` dependencies:
 ```elixir
 def deps do
   [
-    {:nerves_time_rtc_nxp, "~> 0.1.0"}
+    {:nerves_time_rtc_nxp, "~> 0.2.0"}
   ]
 end
 ```
