@@ -8,7 +8,7 @@ defmodule NervesTime.RTC.NXP.MixProject do
     [
       app: :nerves_time_rtc_nxp,
       version: @version,
-      elixir: "~> 1.11",
+      elixir: "~> 1.12",
       description: description(),
       package: package(),
       source_url: @source_url,
