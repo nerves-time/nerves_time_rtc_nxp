@@ -52,7 +52,7 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
 
   @impl NervesTime.RealTimeClock
   def set_time(state, now) do
-    set_time_to_rtc(state, now)
+    _ = set_time_to_rtc(state, now)
     state
   end
 
