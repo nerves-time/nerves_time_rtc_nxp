@@ -24,7 +24,7 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
   @type address :: pos_integer()
 
   @type state :: %{
-          i2c: I2C.bus(),
+          i2c: I2C.Bus.t(),
           bus_name: String.t(),
           address: address()
         }
@@ -81,7 +81,7 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
     end
   end
 
-  @spec rtc_available?(I2C.bus(), address) :: boolean()
+  @spec rtc_available?(I2C.Bus.t(), address) :: boolean()
   defp rtc_available?(i2c, address) do
     case I2C.write_read(i2c, address, @register_control, 1) do
       {:ok, ok} when byte_size(ok) == 1 ->
