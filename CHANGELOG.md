@@ -1,3 +1,10 @@
+# Changelog
+
+## v0.2.1
+
+* Changes
+  * Support using Circuits.I2C 2.0
+
 ## v0.2.0
 
 * Changes
