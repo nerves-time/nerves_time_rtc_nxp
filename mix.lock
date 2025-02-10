@@ -1,5 +1,5 @@
 %{
-  "circuits_i2c": {:hex, :circuits_i2c, "2.0.7", "3f0981743e9f43041edc43eda3964791e71d1231c0fbfebd50595ca564aee1ea", [:make, :mix], [{:elixir_make, "~> 0.6", [hex: :elixir_make, repo: "hexpm", optional: false]}], "hexpm", "57b556e5a7985e80518f23c9cbefc1bc333890a30252b690c049f6ac4c3f9911"},
+  "circuits_i2c": {:hex, :circuits_i2c, "2.1.0", "0656ea5d106744c498a8cd778f39c0685ab574e3da7159814cfbfe709001f0e5", [:make, :mix], [{:elixir_make, "~> 0.6", [hex: :elixir_make, repo: "hexpm", optional: false]}], "hexpm", "3751a875a9d728080fdbc5fd352f728d4746a82e17e52f4444c406200349f6ac"},
   "dialyxir": {:hex, :dialyxir, "1.4.5", "ca1571ac18e0f88d4ab245f0b60fa31ff1b12cbae2b11bd25d207f865e8ae78a", [:mix], [{:erlex, ">= 0.2.7", [hex: :erlex, repo: "hexpm", optional: false]}], "hexpm", "b0fb08bb8107c750db5c0b324fa2df5ceaa0f9307690ee3c1f6ba5b9eb5d35c3"},
   "earmark_parser": {:hex, :earmark_parser, "1.4.43", "34b2f401fe473080e39ff2b90feb8ddfeef7639f8ee0bbf71bb41911831d77c5", [:mix], [], "hexpm", "970a3cd19503f5e8e527a190662be2cee5d98eed1ff72ed9b3d1a3d466692de8"},
   "elixir_make": {:hex, :elixir_make, "0.9.0", "6484b3cd8c0cee58f09f05ecaf1a140a8c97670671a6a0e7ab4dc326c3109726", [:mix], [], "hexpm", "db23d4fd8b757462ad02f8aa73431a426fe6671c80b200d9710caf3d1dd0ffdb"},
@@ -10,5 +10,5 @@
   "makeup_erlang": {:hex, :makeup_erlang, "1.0.2", "03e1804074b3aa64d5fad7aa64601ed0fb395337b982d9bcf04029d68d51b6a7", [:mix], [{:makeup, "~> 1.0", [hex: :makeup, repo: "hexpm", optional: false]}], "hexpm", "af33ff7ef368d5893e4a267933e7744e46ce3cf1f61e2dccf53a111ed3aa3727"},
   "muontrap": {:hex, :muontrap, "1.2.0", "d6f458978d3ecfc8801a48ef3720f0d51bc1782dec44c40ad4d8ef522320905d", [:make, :mix], [{:elixir_make, "~> 0.6", [hex: :elixir_make, repo: "hexpm", optional: false]}], "hexpm", "7702c219a5ae0e9daad1e00eb7d45b9796d362d97abbbd73a31fb172411dc284"},
   "nerves_time": {:hex, :nerves_time, "0.4.6", "f02e5e866149f3884a4b125104a5b677f7e61d271c1f7d87bc989197dc02dae5", [:make, :mix], [{:elixir_make, "~> 0.6", [hex: :elixir_make, repo: "hexpm", optional: false]}, {:muontrap, "~> 0.5 or ~> 1.0", [hex: :muontrap, repo: "hexpm", optional: false]}], "hexpm", "1fecb9e9dd098c0e93d35205a79e604831779f2d2313cfe7c31d181678e26ce6"},
-  "nimble_parsec": {:hex, :nimble_parsec, "1.4.2", "8efba0122db06df95bfaa78f791344a89352ba04baedd3849593bfce4d0dc1c6", [], [], "hexpm", "4b21398942dda052b403bbe1da991ccd03a053668d147d53fb8c4e0efe09c973"},
+  "nimble_parsec": {:hex, :nimble_parsec, "1.4.2", "8efba0122db06df95bfaa78f791344a89352ba04baedd3849593bfce4d0dc1c6", [:mix], [], "hexpm", "4b21398942dda052b403bbe1da991ccd03a053668d147d53fb8c4e0efe09c973"},
 }
