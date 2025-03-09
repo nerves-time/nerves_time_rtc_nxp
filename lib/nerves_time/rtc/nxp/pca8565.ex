@@ -1,3 +1,10 @@
+# SPDX-FileCopyrightText: 2020 Connor Rigby
+# SPDX-FileCopyrightText: 2020 Frank Hunleth
+# SPDX-FileCopyrightText: 2023 Jon Carstens
+# SPDX-FileCopyrightText: 2023 Ryota Kinukawa
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 defmodule NervesTime.RTC.NXP.PCA8565 do
   @moduledoc """
   datasheet: https://www.nxp.com/docs/en/data-sheet/PCA8565.pdf

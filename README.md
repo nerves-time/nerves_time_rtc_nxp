@@ -1,7 +1,9 @@
 # NervesTime.RTC.NXP
 
-[![CircleCI](https://circleci.com/gh/nerves-time/nerves_time_rtc_nxp.svg?style=svg)](https://circleci.com/gh/nerves-time/nerves_time_rtc_nxp)
 [![Hex version](https://img.shields.io/hexpm/v/nerves_time_rtc_nxp.svg "Hex version")](https://hex.pm/packages/nerves_time_rtc_nxp)
+[![API docs](https://img.shields.io/hexpm/v/nerves_time_rtc_nxp.svg?label=hexdocs "API docs")](https://hexdocs.pm/nerves_time_rtc_nxp/NervesTime.RTC.NXP.html)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/nerves-time/nerves_time_rtc_nxp/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/nerves-time/nerves_time_rtc_nxp/tree/main)
+[![REUSE status](https://api.reuse.software/badge/github.com/nerves-time/nerves_time_rtc_nxp)](https://api.reuse.software/info/github.com/nerves-time/nerves_time_rtc_nxp)
 
 NervesTime.RTC implementations for common NXP chips
 
