@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023 Ryota Kinukawa
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 defmodule NervesTime.RTC.NXP.PCF8563 do
   @moduledoc """
   datasheet: https://www.nxp.com/docs/en/data-sheet/PCF8563.pdf
