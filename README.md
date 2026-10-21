@@ -1,3 +1,11 @@
+<!--
+  SPDX-FileCopyrightText: 2020 Connor Rigby
+  SPDX-FileCopyrightText: 2020 Frank Hunleth
+  SPDX-FileCopyrightText: 2023 Ryota Kinukawa
+  SPDX-FileCopyrightText: 2025 Jon Carstens
+  SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # NervesTime.RTC.NXP
 
 [![Hex version](https://img.shields.io/hexpm/v/nerves_time_rtc_nxp.svg "Hex version")](https://hex.pm/packages/nerves_time_rtc_nxp)
