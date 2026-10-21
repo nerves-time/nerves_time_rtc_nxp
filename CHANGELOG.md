@@ -5,6 +5,12 @@
 
 # Changelog
 
+## v0.2.2
+
+* Changes
+  * Return errors on invalid times from the RTC (@BryanLeong)
+  * Check and return error on voltage low (VL bit) (@BryanLeong)
+
 ## v0.2.1
 
 * Changes
