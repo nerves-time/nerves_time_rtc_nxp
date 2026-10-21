@@ -136,6 +136,9 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
     >>
   end
 
+  # VL is set when the supply dropped below Vlow, so the clock integrity is not guaranteed
+  defp registers_to_time(<<1::integer-1, _::bitstring>>), do: {:error, :voltage_low}
+
   defp registers_to_time(
          <<_vl::integer-1, second_bcd::integer-7, _::integer-1, minute_bcd::integer-7,
            _::integer-2, hour_bcd::integer-6, _::integer-2, day_bcd::integer-6, _::integer-5,
