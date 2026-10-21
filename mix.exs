@@ -17,12 +17,7 @@ defmodule NervesTime.RTC.NXP.MixProject do
         flags: [:unmatched_returns, :error_handling, :missing_return, :extra_return, :underspecs]
       ],
       deps: deps(),
-      elixirc_paths: elixirc_paths(Mix.env()),
-      preferred_cli_env: %{
-        docs: :docs,
-        "hex.publish": :docs,
-        "hex.build": :docs
-      }
+      elixirc_paths: elixirc_paths(Mix.env())
     ]
   end
 
@@ -30,6 +25,10 @@ defmodule NervesTime.RTC.NXP.MixProject do
     [
       extra_applications: [:logger]
     ]
+  end
+
+  def cli do
+    [preferred_envs: %{docs: :docs, "hex.publish": :docs, "hex.build": :docs}]
   end
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
