@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: 2020 Frank Hunleth
 # SPDX-FileCopyrightText: 2023 Jon Carstens
 # SPDX-FileCopyrightText: 2023 Ryota Kinukawa
+# SPDX-FileCopyrightText: 2026 Bryan Leong
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -84,7 +85,7 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
   defp get_time_from_rtc(state) do
     with {:ok, registers} <-
            I2C.write_read(state.i2c, state.address, @register_seconds, 7) do
-      {:ok, registers_to_time(registers)}
+      registers_to_time(registers)
     end
   end
 
@@ -145,13 +146,13 @@ defmodule NervesTime.RTC.NXP.PCA8565 do
            _weekday_bcd::integer-3, _c::integer-1, _::integer-2, month_bcd::integer-5,
            year_bcd::integer-8>>
        ) do
-    %NaiveDateTime{
-      day: to_integer(day_bcd),
-      hour: to_integer(hour_bcd),
-      minute: to_integer(minute_bcd),
-      month: to_integer(month_bcd),
-      second: to_integer(second_bcd),
-      year: 2000 + to_integer(year_bcd)
-    }
+    NaiveDateTime.new(
+      2000 + to_integer(year_bcd),
+      to_integer(month_bcd),
+      to_integer(day_bcd),
+      to_integer(hour_bcd),
+      to_integer(minute_bcd),
+      to_integer(second_bcd)
+    )
   end
 end
